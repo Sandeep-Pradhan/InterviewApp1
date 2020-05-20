@@ -10,6 +10,26 @@
   </head>
 
   <body>
-    <%= yield %>
+    <!--Navigation Bar-->
+    <nav class="navbar navbar-light bg-light d-flex">
+      <div class="container">
+        <div class="logo">
+          <a class="navbar-brand" href="<%= root_path %>" data-method="get">
+            InterviewApp1
+          </a>
+        </div>
+        
+        <div class="user-section">
+          <%= link_to 'Add Participants', new_participant_path %>
+          <%= link_to 'View Participants', participants_path %>
+        </div>
+      </div>
+    </nav>
+
+    <!--Main content-->
+    <main class="container">
+      <%= yield %>
+    </main>
+
   </body>
 </html>

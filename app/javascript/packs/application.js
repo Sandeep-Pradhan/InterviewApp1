@@ -5,9 +5,9 @@
 
 //= require popper
 //= require bootstrap-sprockets
-require("jquery");
 
 require("@rails/ujs").start();
+require("jquery");
 require("turbolinks").start();
 require("@rails/activestorage").start();
 require("channels");

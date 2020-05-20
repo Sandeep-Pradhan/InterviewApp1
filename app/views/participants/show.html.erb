@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<div class="container">
+  <div class="jumbotron">
+    <h1> <%= @participant.name %> </h1>
+    <p> <%= @participant.email %> </p>
+    <span class="label label-primary"> Last update: <%= @participant.updated_at.strftime("%b %d, %Y") %></span>
+
+    <div class="actions mt-4 ml-3">
+      <%= link_to 'Back', participants_path, class: 'btn btn-secondary' %>
+      <%= link_to 'Edit', edit_participant_path(@participant), class: 'btn btn-primary' %>
+    </div>
+  </div>
+</div>
