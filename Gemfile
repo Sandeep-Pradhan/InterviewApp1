@@ -25,6 +25,7 @@ gem 'bootstrap', '~> 4.4.1'
 gem 'jquery-rails'
 gem 'font-awesome-rails'
 gem 'pg'
+gem "paperclip", "~> 6.0.0"
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

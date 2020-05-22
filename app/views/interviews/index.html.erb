@@ -15,7 +15,8 @@
         <th>Participant2</th>
         <th>Starts at</th>
         <th>Ends at</th>
-        <th colspan="3"></th>
+        <th>Resume</th>
+        <th colspan="2"></th>
       </tr>
     </thead>
     <tbody>
@@ -26,7 +27,7 @@
           <td><%= interview.participant2 %></td>
           <td><%= interview.starts_at %></td>
           <td><%= interview.ends_at %></td>
-          <td><%= link_to 'Show', interview %></td>
+          <td><a href="<%= interview.resume %>" target="_blank"> <%=interview.resume_file_name%></a></td>
           <td><%= link_to 'Edit', edit_interview_path(interview) %></td>
           <td><%= link_to 'Destroy', interview, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>

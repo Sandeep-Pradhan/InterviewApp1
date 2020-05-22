@@ -7,6 +7,7 @@
     <h5> 2nd Participant: <%= @interview.participant2 %> </h5>
     <h5> Start Time: <%= @interview.starts_at %> </h5>
     <h5> End Time: <%= @interview.ends_at %> </h5>
+    <h5> Resume: <a href="<%= @interview.resume %>" target="_blank"> <%=@interview.resume_file_name%></a> </h5>
 
     <div class="actions mt-4 ml-3">
       <%= link_to 'Back', interviews_path, class: 'btn btn-secondary' %>

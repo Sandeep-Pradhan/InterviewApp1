@@ -4,6 +4,10 @@ class Interview < ApplicationRecord
   validate :date_cannot_be_in_the_past
   validate :no_overlap
 
+  has_attached_file :resume
+  validates_attachment_presence :resume
+  validates_attachment :resume, presence: true, content_type: { content_type: "application/pdf" }
+
   private
     def participants_should_be_different
       errors.add(:participant2, 'Participants Should be Different') if participant1 == participant2
