@@ -26,6 +26,7 @@ gem 'jquery-rails'
 gem 'font-awesome-rails'
 gem 'pg'
 gem "paperclip", "~> 6.0.0"
+gem 'sidekiq'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
