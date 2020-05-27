@@ -10,4 +10,5 @@ end
 class Participant < ApplicationRecord
   validates :email, presence: true, uniqueness: true, email: true
   validates :name, presence: true
+  validates :role, presence: true
 end
