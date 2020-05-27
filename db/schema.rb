@@ -10,15 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_27_155538) do
+ActiveRecord::Schema.define(version: 2020_05_27_193828) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "interview_participants", force: :cascade do |t|
+    t.bigint "interview_id", null: false
+    t.bigint "participant_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["interview_id"], name: "index_interview_participants_on_interview_id"
+    t.index ["participant_id"], name: "index_interview_participants_on_participant_id"
+  end
+
   create_table "interviews", force: :cascade do |t|
     t.string "round"
-    t.string "participant1"
-    t.string "participant2"
     t.datetime "starts_at"
     t.datetime "ends_at"
     t.datetime "created_at", precision: 6, null: false
@@ -37,4 +44,6 @@ ActiveRecord::Schema.define(version: 2020_05_27_155538) do
     t.string "role"
   end
 
+  add_foreign_key "interview_participants", "interviews"
+  add_foreign_key "interview_participants", "participants"
 end

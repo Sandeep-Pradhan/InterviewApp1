@@ -1,13 +1,12 @@
 class Interview < ApplicationRecord
-  validates :round, :participant1, :participant2, :starts_at, :ends_at, presence: true
-  validate :participants_should_be_different
+  has_many :interview_participants, dependent: :delete_all  
+  has_many :participants, :through => :interview_participants
+  
+  validates :round, :starts_at, :ends_at, presence: true
   validate :date_cannot_be_in_the_past
   validate :no_overlap
 
   private
-    def participants_should_be_different
-      errors.add(:participant2, 'Participants Should be Different') if participant1 == participant2
-    end
 
     def date_cannot_be_in_the_past
       if starts_at.present? && starts_at < (DateTime.now + (1.0/24)*0.5)
@@ -19,11 +18,11 @@ class Interview < ApplicationRecord
     end
 
   def no_overlap
-    if (Interview.where("((:s1 BETWEEN starts_at AND ends_at) OR (:e1 BETWEEN starts_at AND ends_at) OR (:s1< starts_at AND :e1>ends_at)) AND (participant1 = :p1 OR participant2 = :p1)", s1:self.starts_at, e1:self.ends_at,p1: self.participant1).where.not(updated_at: self.updated_at).any?)
-      errors.add(:participant1, 'It overlaps another interview')
-    end
-    if (Interview.where("((:s2 BETWEEN starts_at AND ends_at) OR (:e2 BETWEEN starts_at AND ends_at) OR (:s2< starts_at AND :e2>ends_at)) AND (participant1 = :p2 OR participant2 = :p2)", s2:self.starts_at, e2:self.ends_at,p2: self.participant2).where.not(updated_at: self.updated_at).any?)
-      errors.add(:participant2, 'It overlaps another interview')
+    overlaps = Interview.joins("INNER JOIN interview_participants pi ON interviews.id = pi.interview_id")
+    .where("pi.participant_id in (:idd) AND ((interviews.starts_at <= :s AND interviews.ends_at >= :s) OR (interviews.starts_at <= :e AND interviews.ends_at >= :e) OR (interviews.starts_at >= :s AND interviews.ends_at <= :e))", idd:self.participant_ids, s:self.starts_at,e:self.ends_at)
+
+    if overlaps.where.not(updated_at: self.updated_at).any?
+      errors.add(:participant_ids, 'Interview Overlaps for some participants')
     end
   end
 end
