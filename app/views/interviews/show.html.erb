@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+
+<div class="container">
+  <div class="jumbotron">
+    <h1> <%= @interview.round %> </h1>
+    <h5> Start Time: <%= @interview.starts_at %> </h5>
+    <h5> End Time: <%= @interview.ends_at %> </h5>
+    <h5> Participants: </h5>
+    <ul>
+      <% for participant in Participant.all %>
+        <%if @interview.participants.include?(participant) %>
+          <li> <%= participant.name %> </li>
+        <% end%> 
+      <% end %>
+    </ul>
+
+    <div class="actions mt-4 ml-3">
+      <%= link_to 'Back', interviews_path, class: 'btn btn-secondary' %>
+      <%= link_to 'Edit', edit_interview_path(@interview), class: 'btn btn-primary' %>
+    </div>
+  </div>
+</div>

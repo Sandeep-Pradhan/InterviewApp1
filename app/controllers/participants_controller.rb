@@ -4,7 +4,7 @@ class ParticipantsController < ApplicationController
   # GET /participants
   # GET /participants.json
   def index
-    @participants = Participant.all
+    @participants = Participant.all.order(:role,:name)
   end
 
   # GET /participants/1
@@ -69,6 +69,6 @@ class ParticipantsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def participant_params
-      params.require(:participant).permit(:name, :email)
+      params.require(:participant).permit(:name, :email, :role)
     end
 end
