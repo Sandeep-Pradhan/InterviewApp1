@@ -8,6 +8,10 @@ class EmailValidator < ActiveModel::EachValidator
 end
    
 class Participant < ApplicationRecord
+  has_many :interview_participants
+  has_many :interviews, :through => :interview_participants
+
   validates :email, presence: true, uniqueness: true, email: true
   validates :name, presence: true
+  validates :role, presence: true
 end
