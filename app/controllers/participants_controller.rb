@@ -1,15 +1,18 @@
 class ParticipantsController < ApplicationController
+  protect_from_forgery with: :null_session
   before_action :set_participant, only: [:show, :edit, :update, :destroy]
 
   # GET /participants
   # GET /participants.json
   def index
     @participants = Participant.all.order(:role,:name)
+    render json: @participants #For Spa Api data
   end
 
   # GET /participants/1
   # GET /participants/1.json
   def show
+    render json: @participant #For Spa Api data
   end
 
   # GET /participants/new

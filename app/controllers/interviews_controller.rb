@@ -1,11 +1,14 @@
 class InterviewsController < ApplicationController
+  protect_from_forgery with: :null_session
   before_action :set_interview, only: [:show, :edit, :update, :destroy]
 
   def index
-    @interviews = Interview.all.order("starts_at ASC")
+    @interviews = Interview.all.order("starts_at ASC")    
+    render json: @interviews #For Spa Api data
   end
 
   def show
+    render json: @interview
   end
 
   def new
@@ -55,6 +58,6 @@ class InterviewsController < ApplicationController
     end
 
     def interview_params
-      params.require(:interview).permit(:round, :starts_at, :ends_at, :resume, participant_ids: [])
+      params.require(:interview).permit(:round, :starts_at, :ends_at, participant_ids: [])
     end
 end

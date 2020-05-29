@@ -1,18 +1,24 @@
 class Interview < ApplicationRecord
   has_many :interview_participants, dependent: :delete_all  
   has_many :participants, :through => :interview_participants
+  def as_json(**options)
+    unless options.has_key? :include
+      options.merge!(include: [:participants])
+    end
+    super(options)
+  end
   
   validates :round, :starts_at, :ends_at, presence: true
   validate :date_cannot_be_in_the_past
   validate :no_overlap
 
   has_attached_file :resume
-  validates_attachment_presence :resume
-  validates_attachment :resume, presence: true, content_type: { content_type: "application/pdf" }
+  # validates_attachment_presence :resume
+  # validates_attachment :resume, presence: true, content_type: { content_type: "application/pdf" }
 
-  after_create :remind
-  after_update :remind_update_mail
-  before_destroy :remind_delete_mail
+  # after_create :remind
+  # after_update :remind_update_mail
+  # before_destroy :remind_delete_mail
 
   private
     def remind
