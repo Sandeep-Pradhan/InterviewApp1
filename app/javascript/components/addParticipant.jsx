@@ -1,28 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { useDispatch } from "react-redux";
+import { addParticipant as addParticipantAction } from "../redux/actions/participantActions";
 
 function addParticipant() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [role, setRole] = useState("Interviewee");
+  var participant = {
+    name: "",
+    email: "",
+    role: "Interviewee",
+  };
+  const dispatch = useDispatch();
 
   function handleSubmit(e) {
     e.preventDefault();
-    const participant = {
-      name,
-      email,
-      role,
-    };
-    axios
-      .post("/participants", { participant })
-      .then((res) => {
-        alert("Participant Added");
-        location.href = "/";
-      })
-      .catch((error) => {
-        console.log("Error Adding Participant", error);
-      });
+    dispatch(addParticipantAction(participant));
+    location.href = "/reactParticipants";
   }
 
   return (
@@ -36,7 +28,7 @@ function addParticipant() {
             className="form-control"
             id="Name"
             placeholder="Enter name"
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => (participant.name = e.target.value)}
           />
         </div>
         <div className="form-group">
@@ -46,7 +38,7 @@ function addParticipant() {
             className="form-control"
             id="Email"
             placeholder="Enter email"
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => (participant.email = e.target.value)}
           />
         </div>
         <div className="form-group">
@@ -54,8 +46,8 @@ function addParticipant() {
           <select
             className="form-control"
             id="Role"
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
+            defaultValue={participant.role}
+            onChange={(e) => (participant.role = e.target.value)}
           >
             <option value="Interviewer">Interviewer</option>
             <option value="Interviewee">Interviewee</option>

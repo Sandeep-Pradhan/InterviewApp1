@@ -1,45 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
 import CheckboxGroup from "react-checkbox-group";
+import { getParticipants } from "../redux/actions/participantActions";
+import { addInterview as addInterviewAction } from "../redux/actions/interviewActions";
 
 function addInterview() {
-  const [round, setRound] = useState("");
-  const [starts_at, setStarts_at] = useState();
-  const [ends_at, setEnds_at] = useState();
-  const [participants, setParticipants] = useState([]);
+  const Participants = useSelector((state) =>
+    Object.values(state.participants)
+  );
+  var interview = {
+    round: "",
+    starts_at: "",
+    ends_at: "",
+    participants: [],
+  };
   const [selParticipants, setSelParticipants] = useState([]);
-
+  const dispatch = useDispatch();
   useEffect(() => {
-    axios
-      .get("/participants")
-      .then((res) => {
-        setParticipants(res.data);
-      })
-      .catch((error) => {
-        console.log("Error fetching Participants", error);
-      });
+    dispatch(getParticipants());
   }, []);
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(selParticipants);
-    console.log(participants);
-    const interview = {
-      round,
-      starts_at,
-      ends_at,
-      participant_ids: selParticipants,
-    };
-    axios
-      .post("/interviews", { interview })
-      .then((res) => {
-        alert("Interview Added");
-        location.href = "/";
-      })
-      .catch((error) => {
-        console.log("Error Adding Interview", error);
-      });
+    dispatch(addInterviewAction(interview));
+    // location.href = "/";
   }
 
   return (
@@ -53,28 +38,34 @@ function addInterview() {
             className="form-control"
             id="round"
             placeholder="Enter Round"
-            onChange={(e) => setRound(e.target.value)}
+            onChange={(e) => (interview.round = e.target.value)}
           />
         </div>
 
         <div className="form-group">
           <label>Participants:</label>
           <br />
-          <CheckboxGroup //from react-checkbox-group used to add array of participants_id when checked
-            name="selParticipants"
-            value={selParticipants}
-            onChange={setSelParticipants}
-          >
-            {(Checkbox) => (
-              <>
-                {participants.map((participant) => (
-                  <label key={participant.id}>
-                    <Checkbox value={participant.id} /> {participant.name}
-                  </label>
-                ))}
-              </>
-            )}
-          </CheckboxGroup>
+          {Participants ? (
+            <>
+              <CheckboxGroup //from react-checkbox-group used to add array of participants_id when checked
+                name="selParticipants"
+                value={selParticipants}
+                onChange={setSelParticipants}
+              >
+                {(Checkbox) => (
+                  <>
+                    {Participants.map((participant) => (
+                      <label key={participant.id}>
+                        <Checkbox value={participant.id} /> {participant.name}
+                      </label>
+                    ))}
+                  </>
+                )}
+              </CheckboxGroup>
+            </>
+          ) : (
+            <p>Loading Participants</p>
+          )}
         </div>
 
         <div className="form-group">
@@ -83,7 +74,7 @@ function addInterview() {
             type="datetime"
             className="form-control"
             id="starts_at"
-            onChange={(e) => setStarts_at(e.target.value)}
+            onChange={(e) => (interview.round = e.target.value)}
           />
         </div>
 
@@ -93,7 +84,7 @@ function addInterview() {
             type="datetime"
             className="form-control"
             id="ends_at"
-            onChange={(e) => setEnds_at(e.target.value)}
+            onChange={(e) => (interview.round = e.target.value)}
           />
         </div>
 
