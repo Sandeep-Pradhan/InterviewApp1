@@ -28,6 +28,7 @@ gem 'pg'
 gem "paperclip", "~> 6.0.0"
 gem 'sidekiq'
 gem 'rack-cors'
+gem 'react-rails'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
