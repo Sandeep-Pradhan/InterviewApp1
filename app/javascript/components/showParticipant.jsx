@@ -1,40 +1,41 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { getParticipant } from "../redux/actions/participantActions";
 
 function showParticipant() {
   const { id } = useParams();
-  const [participant, setParticipant] = useState("");
+  const participant = useSelector((state) => state.participants[id]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    axios
-      .get(`/participants/${id}`)
-      .then((res) => {
-        setParticipant(res.data);
-      })
-      .catch((error) => {
-        console.log("Error fetching Participant", error);
-      });
+    dispatch(getParticipant(id));
   }, []);
 
   return (
     <div className="container mt-5">
       <div className="jumbotron">
-        <h1> {participant.name} </h1>
-        <p> Email: {participant.email} </p>
-        <p> Role: {participant.role} </p>
+        {participant ? (
+          <>
+            <h1> {participant.name} </h1>
+            <p> Email: {participant.email} </p>
+            <p> Role: {participant.role} </p>
 
-        <div className="actions mt-4">
-          <Link className="btn btn-primary mr-3" to={`/reactParticipants`}>
-            Participants
-          </Link>
-          <Link
-            className="btn btn-primary"
-            to={`/reactParticipants/${participant.id}/edit`}
-          >
-            Edit
-          </Link>
-        </div>
+            <div className="actions mt-4">
+              <Link className="btn btn-primary mr-3" to={`/reactParticipants`}>
+                Participants
+              </Link>
+              <Link
+                className="btn btn-primary"
+                to={`/reactParticipants/${participant.id}/edit`}
+              >
+                Edit
+              </Link>
+            </div>
+          </>
+        ) : (
+          <p>Loading</p>
+        )}
       </div>
     </div>
   );
