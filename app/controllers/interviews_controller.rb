@@ -55,6 +55,6 @@ class InterviewsController < ApplicationController
     end
 
     def interview_params
-      params.require(:interview).permit(:round, :starts_at, :ends_at, participant_ids: [])
+      params.require(:interview).permit(:round, :starts_at, :ends_at, :resume, participant_ids: [])
     end
 end
