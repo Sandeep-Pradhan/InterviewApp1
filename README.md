@@ -1,24 +1,5 @@
-# README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Objective: To build an Interview SchedulerWeb App using React and Ruby on Rails.
+* User have access to edit/delete interviews
+* Interview can have multiple participants depending on the availability of participants
+* Each Interview will have resume attached 
+* A Reminder Email should be sent 30min before the schedule interview to all its participants
