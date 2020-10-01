@@ -60,7 +60,7 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   # config.file_watcher = ActiveSupport::EventedFileUpdateChecker
   Paperclip.options[:command_path] = "/usr/local/bin/"
-  config.action_controller.asset_host = 'http://localhost:3000' # Locally
+  config.action_controller.asset_host = 'http://localhost:3000'
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.raise_delivery_errors = true
@@ -70,8 +70,8 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     address: "smtp.gmail.com",
     port: 587,
-    domain: "example.com",
-    authentication: "plain",
+    domain: "gmail.com",
+    authentication: 'login',
     enable_starttls_auto: true,
     user_name: ENV["GMAIL_USERNAME"],
     password: ENV["GMAIL_PASSWORD"]

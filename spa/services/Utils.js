@@ -21,7 +21,6 @@ const Utils = {
       request.id = x;
     }
 
-    console.log(request);
     return request;
   },
 

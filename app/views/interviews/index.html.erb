@@ -11,8 +11,7 @@
     <thead>
       <tr>
         <th>Round</th>
-        <th>Participant1</th>
-        <th>Participant2</th>
+        <th>Participants</th>
         <th>Starts at</th>
         <th>Ends at</th>
         <th>Resume</th>
@@ -23,8 +22,13 @@
       <% @interviews.each do |interview| %>
         <tr>
           <td><%= interview.round %></td>
-          <td><%= interview.participant1 %></td>
-          <td><%= interview.participant2 %></td>
+          <td>
+            <% for participant in Participant.all %>
+              <%if interview.participants.include?(participant) %>
+                <span> <%= participant.name %> </span>
+              <% end%> 
+            <% end %>
+          </td>
           <td><%= interview.starts_at %></td>
           <td><%= interview.ends_at %></td>
           <td><a href="<%= interview.resume %>" target="_blank"> <%=interview.resume_file_name%></a></td>
